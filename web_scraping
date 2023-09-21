@@ -1,1 +1,48 @@
+import requests
+from bs4 import BeautifulSoup
 
+def scrape(url, filename):
+    try:
+        # Send an HTTP GET request to the URL
+        response = requests.get(url)
+
+    # Check if the request was successful
+        if response.status_code == 200:
+            # Parse the HTML content of the page
+            soup = BeautifulSoup(response.text, "html.parser")
+
+            # Find the elements containing the information you want
+            # For example, to extract all the text from <p> tags:
+            paragraphs = soup.find_all("p")
+
+            # Create or open a text file for writing
+            with open(filename, "w", encoding="utf-8") as file:
+                # Write the extracted information to the text file
+                for paragraph in paragraphs:
+                    file.write(paragraph.get_text() + "\n")
+
+            print("Data has been scraped and saved to ", filename)
+        else:
+            print("Failed to retrieve the webpage. Status code:", response.status_code)
+
+    except Exception as e:
+        print("An error occurred:", str(e))
+
+
+scrape("https://www.fortunebusinessinsights.com/scada-market-102433", "0 fortunebusiness.txt")
+scrape("https://www.alliedmarketresearch.com/scada-market", "1 alliedmarketreseatch.txt")
+scrape("https://www.marketresearchfuture.com/reports/scada-market-2056", "2 marketresearchfuture.txt")
+scrape("https://www.databridgemarketresearch.com/reports/global-scada-market", "3 databridgemarket.txt")
+scrape("https://inductiveautomation.com/scada-software/", "4 inductiveautomation.txt")
+scrape("https://process.honeywell.com/us/en/products/control-and-supervisory-systems/scada", "5 honeywell.txt")  # go into specific product sites
+scrape("https://www.emerson.com/en-us/automation/control-and-safety-systems/scada-systems", "6 emerson.txt")  # go into specific product sites
+scrape("https://www.ge.com/digital/applications/hmi-scada","7 GEScada.txt")
+scrape("https://www.ge.com/digital/applications/hmi-scada/ifix","8 GEScada1.txt")
+scrape("https://www.ge.com/digital/applications/hmi-scada/cimplicity","9 GEScada2.txt")
+scrape("https://www.ge.com/digital/applications/hmi-scada/workflow","10 GEScada3.txt")
+scrape("https://www.ge.com/digital/applications/hmi-scada/operations-hub","11 GEScada4.txt")
+scrape("https://www.rockwellautomation.com/en-us/products/software/factorytalk.html","12 RockwellMain.txt")
+scrape("https://www.rockwellautomation.com/en-us/products/software/factorytalk/datamosaix.html","13 Rockwell1.txt")
+scrape("https://www.rockwellautomation.com/en-us/products/software/factorytalk/optix.html","14 Rockwell2.txt")
+scrape("https://www.rockwellautomation.com/en-us/products/software/factorytalk/design-studio.html","15 Rockwell3.txt")
+scrape("https://www.rockwellautomation.com/en-us/products/software/factorytalk/remote-access.html","16 Rockwell4.txt")
